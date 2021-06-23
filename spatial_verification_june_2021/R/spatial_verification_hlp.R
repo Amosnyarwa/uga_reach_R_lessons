@@ -3,7 +3,7 @@ library(sf)
 library(butteR)
 
 # reading data
-df_collect_data <- read_csv("spatial_verification_june_2021/inputs/REACH_UGA_HLP_raw_dataset.csv") %>% filter(
+df_collect_data <- read_csv("inputs/REACH_UGA_HLP_raw_dataset.csv") %>% filter(
   refugee_settlement == "kiryandongo"
 )
 
@@ -13,8 +13,8 @@ df_collect_data_pts <- st_as_sf(df_collect_data, coords = c("_geopoint_longitude
   # st_transform(crs = 32636)
 
 
-df_limits <- st_read("spatial_verification_june_2021/inputs/Kiyandongo settlements", "Kiryandongo_settlement", quiet=T) %>% st_transform(crs = 4326)
-df_sample_pts <- st_read("spatial_verification_june_2021/inputs/Kiryandongo_pts", "Kiryandongo_HLP_pts", quiet=T) %>% st_transform(crs = 4326)
+df_limits <- st_read("inputs/Kiyandongo settlements", "Kiryandongo_settlement", quiet=T) %>% st_transform(crs = 4326)
+df_sample_pts <- st_read("inputs/Kiryandongo_pts", "Kiryandongo_HLP_pts", quiet=T) %>% st_transform(crs = 4326)
 
 
 # map of interviews, sample pts and limits
@@ -39,3 +39,5 @@ target_sample_index <-  df_collect_data_pts %>%
 # find_some_dist <- st_distance(df_collect_data_pts[df_collect_data_pts$point_number == df_sample_pts$OBJECTID,], df_sample_pts, by_element = T)
 # testing one single point "22"
 find_some_dist <- st_distance(df_collect_data_pts[df_collect_data_pts$point_number == 73,], df_sample_pts[df_sample_pts$OBJECTID == 73,], by_element = T)
+
+
