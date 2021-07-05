@@ -10,7 +10,7 @@ df_collect_data <- read_csv("inputs/REACH_UGA_HLP_raw_dataset.csv") %>% filter(
 df_collect_data_pts <- st_as_sf(df_collect_data, coords = c("_geopoint_longitude","_geopoint_latitude"), crs = 4326)
   
   
-  # st_transform(crs = 32636)
+# st_transform(crs = 32636)
 
 
 df_limits <- st_read("inputs/Kiyandongo settlements", "Kiryandongo_settlement", quiet=T) %>% st_transform(crs = 4326)

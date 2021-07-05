@@ -1,0 +1,47 @@
+---
+title: "Intro to sf package"
+author: "Amos Nyarwaya"
+date: "5/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+l
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+library(sf)
+library(tidyverse)
+# getwd()
+
+admin <- sf::st_read(dsn= "2021-05-10/inputs", layer="uganda_regions")
+
+
+```
+
+### visualize sf
+
+```{r ggplot_sf}
+ggplot()+
+  geom_sf(data = admin)
+
+```
+
+### Create some sample point data
+
+```{r }
+pt_sample <- st_sample(x = admin, size = 600)
+class(pt_sample)
+class(admin)
+
+ggplot()+
+  geom_sf(data = admin)+
+  geom_sf(data = pt_sample)
+```
