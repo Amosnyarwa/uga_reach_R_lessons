@@ -1,6 +1,7 @@
 library(tidyverse)
 library(sf)
 library(butteR)
+library(rtree)
 
 # reading data
 df_collect_data <- read_csv("inputs/REACH_UGA_HLP_raw_dataset.csv") %>% filter(
@@ -25,12 +26,19 @@ ggplot()+
   theme_bw()
 
 # check_point_distance_by_id
-# ?butteR::check_distances_from_target()
 ?butteR::check_point_distance_by_id()
+
 find_some_dist <- check_point_distance_by_id(sf1=df_collect_data_pts, sf2=df_sample_pts, sf1_id = "point_number", sf2_id = "OBJECTID",dist_threshold = 150 )
 
 my_data <- find_some_dist$dataset
 find_some_dist$map
+find_some_dist$hist
+
+plot(my_data %>% filter(dist_m > 20) %>% select(point_number))
+# # check_distances_from_target
+# ?butteR::check_distances_from_target()
+# find_some_dist_from_target <- check_distances_from_target(dataset_sf = df_collect_data_pts, target_points = df_sample_pts, cols_to_report = c("uuid", "point_number"), distance_threshold = 150 )
+# # Error: 'knn.RTree' is not an exported object from 'namespace:rtree'
 
 
 # get distances

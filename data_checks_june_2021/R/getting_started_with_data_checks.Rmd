@@ -16,5 +16,5 @@ knitr::opts_chunk$set(echo = TRUE)
 - separate the start and end columns into their hours, minutes, and seconds
 - Get time interval of the survey
 - Get time interval between surveys
--
+- 
 -
