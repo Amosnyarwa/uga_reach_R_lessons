@@ -35,15 +35,24 @@ for (pt_no in pt_nos_sample) {
   df_current_field_data <- df_collect_data_pts %>% 
     filter(
       point_number == pt_no
-    )
-  current_distance <- st_distance(df_current_sample, df_current_field_data)
-  df_current_data_with_distance <- df_current_field_data %>% 
-    mutate(
-      distance = current_distance
-    )
-   # select("_uuid", "today", "enumerator", "point_number", "refugee_settlement", "_geopoint_longitude","_geopoint_latitude")
-  calc_distances <- rbind(calc_distances, df_current_data_with_distance)
+    ) %>% 
+    mutate(uuid =`_uuid`, latitude = sf::st_coordinates(.)[,1],  longitude = sf::st_coordinates(.)[,2])
+  if (nrow(df_current_field_data)>=1){
+    current_distance <- st_distance(df_current_sample, df_current_field_data, by_element = TRUE)
+    # print(current_distance)
+    print(nrow(df_current_field_data))
+    print(typeof(current_distance))
+    df_current_data_with_distance <- as_tibble (df_current_field_data) %>% 
+      dplyr::select(-geometry) %>% 
+      mutate(
+        distance = current_distance
+      ) %>% 
+      dplyr::select(uuid, today, enumerator, point_number, refugee_settlement,longitude,latitude, distance)
+    calc_distances <- rbind(calc_distances, df_current_data_with_distance)}
+  
 }
+
+
 
 # data frame for spatial verification
 # check_spatial_verification <- data.frame()
